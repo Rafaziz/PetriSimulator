@@ -33,31 +33,40 @@
 #include <time.h>
 
 #define MAX 40
-#define SIZE 20
+#define SIZE 256
 
 /*void random(char v[MAX]);*/
-int readfile(char v[MAX][SIZE]);
+void readplaces(char v[], int places);
 
 
 int main (void)
 {
-    char v[MAX][SIZE];
-    int k; 
-    k = readfile(v);
-    printf("%d", k);
-
+    int places = 0;
+    char read[SIZE]; 
+    scanf("%s", read);
+    places = atoi(read);
+    printf("lugares: %d\n", places);
+    char v[places];
+    readplaces(v, places);
     srand(time(NULL) + getpid());
+
+
 }
 
-int readfile(char v[MAX][SIZE])
+void readplaces(char v[], int places)
 {
     int i;
-    for(i=0; i < MAX; i++)
+    char aux;
+    for(i=0; i < places; i++)
     {
-        if(scanf("%s", &v[i]) == EOF)
-            return i;
-        printf("%s%d\n", v[i],i);
+        scanf("%c", &aux);
+        if(aux != '\n')
+        {
+            v[i] = aux;
+            printf("caracter: %c i vale = %d\n", aux,i);
+        }
+        else
+            i--;
     }
-    
 }
         
