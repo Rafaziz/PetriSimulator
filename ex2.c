@@ -36,37 +36,63 @@
 #define SIZE 256
 
 /*void random(char v[MAX]);*/
-void readplaces(char v[], int places);
-
+void readplaces(int v[], int places);
+void readarcs(int **a/*a[][MAX]*/, int anumb);
 
 int main (void)
 {
-    int places = 0;
-    char read[SIZE]; 
-    scanf("%s", read);
-    places = atoi(read);
+    int places, transitions, pt_arcs, tp_arcs; /* variaveis de lugares, transicoes, arcos consumidores e produtores */
+    scanf("%d", &places);
     printf("lugares: %d\n", places);
-    char v[places];
-    readplaces(v, places);
+    int p[places]; /* vetor que dos lugares e quantos tokens há em cada */
+    readplaces(p, places);
+    
+    scanf("%d", &transitions);
+    printf("Numero de transicoes: %d\n", transitions);
+    int pt_a[places][transitions], tp_a[transitions][places]; /* vetores dos arcos consumidores e produtores */
+  /*  int **pta, **tpa;  ponteiros que vao receber o os vetores dos arcos
+    pta = &pt_a[places][transitions]; 
+    tpa = &tp_a[transitions][places]; */
+    scanf("%d", &pt_arcs);
+    printf("Numero de arcos consumidores: %d\n", pt_arcs);
+    readarcs(pt_a, pt_arcs);
+    scanf("%d", &tp_arcs);
+    printf("Numero de arcos produtores: %d\n", tp_arcs);
+    readarcs(tp_a, tp_arcs);
+
     srand(time(NULL) + getpid());
 
 
 }
 
-void readplaces(char v[], int places)
+void readplaces(int v[], int places) /* read the number of tokens at each places */
 {
     int i;
-    char aux;
+    int aux;
     for(i=0; i < places; i++)
     {
-        scanf("%c", &aux);
+        scanf("%d", &aux);
         if(aux != '\n')
         {
             v[i] = aux;
-            printf("caracter: %c i vale = %d\n", aux,i);
+            printf("caracter: %d i vale = %d\n", aux,i);
         }
         else
             i--;
     }
 }
-        
+void readarcs(int **a/*a[][MAX]*/, int anumb)
+{
+    int i, x, y, z;
+    for(i=0; i < anumb; i++)
+    {
+        scanf("%d %d %d", &x, &y, &z);
+        if(x != '\n' && y != '\n' && z != '\n')
+        {
+            a[x][y] = z;
+            printf("a[%d][%d] = %d\n", x, y, a[x][y]);
+        }
+        else
+            i--;
+    }
+}
